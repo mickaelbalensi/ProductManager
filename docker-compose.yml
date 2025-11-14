@@ -36,16 +36,30 @@ services:
     ports:
       - "3000:3000"
       - "5555:5555"
-    environment:
-      DATABASE_URL: "postgresql://postgres:password@db:5432/productmanager?schema=public"
-      JWT_SECRET: "secret_pass_key_for_jwt"
-      JWT_EXPIRES_IN: "24h"
+    env_file:
+      - .env.docker
+    # Appliquer les migrations au démarrage puis lancer l'API
+    command: >
+      sh -c "npx prisma migrate deploy && node dist/app.js"
     depends_on:
       - db
     networks:
       - productmanager_network
     volumes:
       - /app/node_modules
+
+  # Runner de tests d'intégration (dans Docker)
+  test:
+    build: .
+    container_name: productmanager_test_runner
+    depends_on:
+      - db_test
+    env_file:
+      - env.test.docker
+    networks:
+      - productmanager_network
+    command: >
+      sh -c "npx prisma migrate deploy && npm run test:integration"
 
 
 volumes:

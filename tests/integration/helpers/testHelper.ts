@@ -6,7 +6,11 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 
 // Charger les variables d'environnement de test
-dotenv.config({ path: './env.test' });
+// - En local : utilise env.test (localhost:5433)
+// - En Docker : si DATABASE_URL est déjà fourni par le conteneur, on ne surcharge pas
+if (!process.env.DATABASE_URL) {
+  dotenv.config({ path: './env.test' });
+}
 
 import authRoutes from '../../../src/routes/authRoutes';
 import projectRoutes from '../../../src/routes/projectRoutes';
