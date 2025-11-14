@@ -1,0 +1,102 @@
+### Test Authentication API
+
+### Variables
+@baseUrl = http://localhost:3000
+@token = {{login.response.body.token}}
+
+### 1. Inscription d'un utilisateur (POST /auth/register)
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "familyName": "Doe",
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+
+### 2. Connexion d'un utilisateur (POST /auth/login)
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+
+### 3. Récupérer les informations de l'utilisateur connecté (GET /auth/me)
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+### 4. Test d'une route protégée - Créer un projet
+POST {{baseUrl}}/projects
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Mon Projet Sécurisé",
+  "description": "Un projet créé avec authentification",
+  "ownerId": "user-id-from-token"
+}
+
+### 5. Test sans token - Doit retourner 401
+POST {{baseUrl}}/projects
+Content-Type: application/json
+
+{
+  "name": "Projet Non Autorisé",
+  "description": "Ce projet ne devrait pas être créé"
+}
+
+### 6. Test avec token invalide - Doit retourner 401
+POST {{baseUrl}}/projects
+Authorization: Bearer invalid-token-here
+Content-Type: application/json
+
+{
+  "name": "Projet Token Invalide",
+  "description": "Ce projet ne devrait pas être créé"
+}
+
+### 7. Test d'erreur - Email déjà existant
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Jane",
+  "familyName": "Smith",
+  "email": "john.doe@example.com",
+  "password": "password456"
+}
+
+### 8. Test d'erreur - Mot de passe trop court
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Bob",
+  "familyName": "Wilson",
+  "email": "bob.wilson@example.com",
+  "password": "123"
+}
+
+### 9. Test d'erreur - Email invalide
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "familyName": "Brown",
+  "email": "email-invalide",
+  "password": "password123"
+}
+
+### 10. Test d'erreur - Identifiants incorrects
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "wrong-password"
+}

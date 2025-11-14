@@ -1,0 +1,58 @@
+services:
+  # Base de données PostgreSQL
+  db:
+    image: postgres:15
+    container_name: productmanager_db
+    restart: always
+    environment:
+      POSTGRES_DB: productmanager
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - productmanager_network
+
+  # Base de données PostgreSQL (tests)
+  db_test:
+    image: postgres:15
+    container_name: productmanager_db_test
+    environment:
+      POSTGRES_DB: productmanager_test
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+    networks:
+      - productmanager_network
+
+  # Application Node.js
+  app:
+    build: .
+    container_name: productmanager_app
+    restart: always
+    ports:
+      - "3000:3000"
+      - "5555:5555"
+    environment:
+      DATABASE_URL: "postgresql://postgres:password@db:5432/productmanager?schema=public"
+      JWT_SECRET: "secret_pass_key_for_jwt"
+      JWT_EXPIRES_IN: "24h"
+    depends_on:
+      - db
+    networks:
+      - productmanager_network
+    volumes:
+      - /app/node_modules
+
+
+volumes:
+  postgres_data:
+  postgres_test_data:
+
+
+networks:
+  productmanager_network:
+    driver: bridge

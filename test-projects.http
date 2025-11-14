@@ -1,0 +1,70 @@
+### Test Project Management API
+
+### 1. Créer un utilisateur d'abord (nécessaire pour les projets)
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "familyName": "Doe",
+  "email": "john.doe@example.com"
+}
+
+### 2. Créer un projet (POST /projects)
+POST http://localhost:3000/projects
+Content-Type: application/json
+
+{
+  "name": "Mon Premier Projet",
+  "description": "Description de mon premier projet",
+  "ownerId": 1
+}
+
+### 3. Créer un autre projet
+POST http://localhost:3000/projects
+Content-Type: application/json
+
+{
+  "name": "Projet E-commerce",
+  "description": "Développement d'une plateforme e-commerce",
+  "ownerId": 1
+}
+
+### 4. Récupérer un projet par ID (GET /projects/:id)
+GET http://localhost:3000/projects/1
+
+### 5. Récupérer tous les projets d'un utilisateur
+GET http://localhost:3000/projects?ownerId=1
+
+### 6. Mettre à jour un projet
+PUT http://localhost:3000/projects/1
+Content-Type: application/json
+
+{
+  "name": "Mon Premier Projet - Modifié",
+  "description": "Description mise à jour"
+}
+
+### 7. Test d'erreur - Projet inexistant
+GET http://localhost:3000/projects/999
+
+### 8. Test d'erreur - Propriétaire inexistant
+POST http://localhost:3000/projects
+Content-Type: application/json
+
+{
+  "name": "Projet avec propriétaire inexistant",
+  "description": "Ce projet ne devrait pas être créé",
+  "ownerId": 999
+}
+
+### 9. Test d'erreur - Données manquantes
+POST http://localhost:3000/projects
+Content-Type: application/json
+
+{
+  "description": "Projet sans nom ni propriétaire"
+}
+
+### 10. Supprimer un projet
+DELETE http://localhost:3000/projects/2

@@ -1,0 +1,55 @@
+Entities
+The system should manage four entities:
+1. User: represents a person in the system.
+Project Management API - Backend Engineer 1
+2. Project: represents a project owned by a user.
+3. Task: represents a work item belonging to a project.
+4. Comment: represents a comment made by a user on a task.
+
+Technical Stack Requirements
+Category Requirement
+Language NodeJS with TypeScript
+Framework Express.js
+Database SQL or NoSQL of your choice
+Authentication Required
+ORM / ODM ORM / ODM of your choice
+Schema Migrations Required, at least 2
+Testing Optional, but encouraged (unit or integration)
+Documentation README.md explaining setup, migrations, and endpoints
+Version Control Submit via GitHub repository
+You can use Docker for easier setup if you like, but it’s not mandatory.
+
+Functional Requirements
+
+󾠮 User Management
+POST /users
+Create a new user.
+
+󾠯 Project Management
+POST /projects
+Create a project owned by a user.
+GET /projects/:id
+Retrieve a project with its tasks and comments.
+Project Management API - Backend Engineer 2
+
+󾠰 Task Management
+POST /projects/:projectId/tasks
+Create a new task under a project.
+PATCH /tasks/:id/status
+Update task status.
+Rules
+Allowed statuses: todo , in_progress , done .
+Should return a 400 error if the status is invalid.
+
+󾠱 Comments
+POST /tasks/:id/comments
+Add a comment to a task.
+Business Rules
+A project must be owned by an existing user.
+A task must belong to a valid project.
+A comment must belong to a valid task and be authored by an existing user.
+status field of a task can only be one of: todo , in_progress , done.
+Use UUIDs (or ORM equivalent) as IDs.
+Handle all error cases with appropriate HTTP codes (400, 404, 409, 500).
+You must have at least 2 schema migrations, one for User, Project, Task and
+then another one for Comments.
