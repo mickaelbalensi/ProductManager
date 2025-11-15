@@ -48,24 +48,9 @@ services:
     volumes:
       - /app/node_modules
 
-  # Runner de tests d'intégration (dans Docker)
-  test:
-    build: .
-    container_name: productmanager_test_runner
-    depends_on:
-      - db_test
-    env_file:
-      - env.test.docker
-    networks:
-      - productmanager_network
-    command: >
-      sh -c "npx prisma migrate deploy && npm run test:integration"
-
-
 volumes:
   postgres_data:
   postgres_test_data:
-
 
 networks:
   productmanager_network:
