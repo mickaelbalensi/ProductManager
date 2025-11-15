@@ -93,21 +93,4 @@ export class AuthController {
       });
     }
   }
-
-//   // GET /me - Récupérer les informations de l'utilisateur connecté
-//   static async getMe(req: Request, res: Response) {
-//     try {
-//       // L'utilisateur est déjà attaché à req par le middleware d'authentification
-//       const user = (req as any).user;
-      
-//       res.status(200).json({
-//         user
-//       });
-//     } catch (error) {
-//       console.error('Error getting user info:', error);
-//       res.status(500).json({
-//         error: 'Internal server error'
-//       });
-//     }
-//   }
 }

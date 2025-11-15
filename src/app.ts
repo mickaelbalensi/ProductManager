@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
 import projectRoutes from './routes/projectRoutes';
 import taskRoutes from './routes/taskRoutes';
+import { swaggerUi, specs } from './swagger';
 
 // Charger les variables d'environnement
 dotenv.config();
@@ -15,8 +16,18 @@ const PORT = process.env.PORT || 3000;
 
 // Middlewares
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://product-manager-vo2.xyz',
+    'http://127.0.0.1:3000'
+  ],
+  credentials: true
+}));
 app.use(express.json());
+
+// Documentation Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Routes API
 app.use('/auth', authRoutes);
@@ -35,7 +46,8 @@ app.get('/', (req, res) => {
       users: '/users',
       projects: '/projects (protected)',
       tasks: '/tasks (protected)',
-      health: '/health'
+      health: '/health',
+      documentation: '/api-docs'
     }
   });
 });

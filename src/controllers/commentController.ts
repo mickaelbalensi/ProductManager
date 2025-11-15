@@ -70,31 +70,4 @@ export class CommentController {
       });
     }
   }
-
-  // // GET /tasks/:id/comments - Récupérer tous les commentaires d'une tâche
-  // static async getCommentsByTask(req: Request, res: Response) {
-  //   try {
-  //     const { id: taskId } = req.params;
-
-  //     // Validation de l'ID
-  //     if (!taskId || typeof taskId !== 'string') {
-  //       return res.status(400).json({
-  //         error: 'Invalid task ID'
-  //       });
-  //     }
-
-  //     // Récupérer les commentaires
-  //     const comments = await CommentService.getCommentsByTaskId(taskId);
-
-  //     res.status(200).json({
-  //       comments,
-  //       count: comments.length
-  //     });
-  //   } catch (error) {
-  //     console.error('Error fetching comments:', error);
-  //     res.status(500).json({
-  //       error: 'Internal server error'
-  //     });
-  //   }
-  // }
 }
