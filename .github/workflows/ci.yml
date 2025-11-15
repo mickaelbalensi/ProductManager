@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: productmanager_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Wait for Postgres
+        run: |
+          for i in {1..15}; do
+            nc -z 127.0.0.1 5433 && echo "Postgres is up" && break
+            echo "Waiting for Postgres..."
+            sleep 2
+          done
+
+      - name: Run migrations
+        env:
+          DATABASE_URL: postgresql://postgres:password@localhost:5433/productmanager_test?schema=public
+        run: npx prisma migrate deploy
+
+      - name: Run integration tests
+        env:
+          DATABASE_URL: postgresql://postgres:password@localhost:5433/productmanager_test?schema=public
+          NODE_ENV: test
+          PORT: 3001
+          JWT_SECRET: integration-test-secret-key-do-not-use-in-production
+          JWT_EXPIRES_IN: 1h
+        run: npm run test:integration

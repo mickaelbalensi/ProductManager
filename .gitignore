@@ -10,6 +10,9 @@ coverage/
 # Environment variables
 .env
 .env.*
+.env.test
+.env.test.docker
+.env.docker
 .env.local
 .env.*.local
 
