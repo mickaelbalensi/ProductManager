@@ -44,14 +44,14 @@ router.use(authMiddleware);
  *             properties:
  *               name:
  *                 type: string
- *                 example: "Product Manager API"
+ *                 example: "Frontent Product Manager"
  *               description:
  *                 type: string
- *                 example: "Create a backend server for Product Manager to handle products, divide into tasks"
+ *                 example: "Create a frontend for Product Manager to handle products, divide into tasks"
  *               ownerId:
  *                 type: string
  *                 format: uuid
- *                 example: "902ad53e-b0df-4ee3-9e4c-ef2121830bdd"
+ *                 example: "020ca4fb-e32d-40f5-b37e-ed068c1e0479"
  *           examples:
  *             product_manager_api:
  *               summary: "Exemple de projet ProductManager API"
@@ -98,7 +98,7 @@ router.post('/', ProjectController.createProject);
  *           type: string
  *           format: uuid
  *         description: ID du projet
- *         example: "41629c30-7fc0-4a67-a61c-f0db2851eea1"
+ *         example: "8e5db716-c9d5-40a9-9433-8b51417e24f4"
  *       - in: header
  *         name: Authorization
  *         required: true
@@ -145,6 +145,7 @@ router.get('/:id', ProjectController.getProjectById);
  *           type: string
  *           format: uuid
  *         description: ID du projet
+ *         example: "8e5db716-c9d5-40a9-9433-8b51417e24f4"
  *       - in: header
  *         name: Authorization
  *         required: true
@@ -170,10 +171,10 @@ router.get('/:id', ProjectController.getProjectById);
  *             properties:
  *               title:
  *                 type: string
- *                 example: "Implement user authentication"
+ *                 example: "New Task 3"
  *               description:
  *                 type: string
- *                 example: "Add JWT-based authentication system"
+ *                 example: "todo 3"
  *     responses:
  *       201:
  *         description: Tâche créée avec succès

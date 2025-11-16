@@ -52,19 +52,16 @@ export class ProjectController {
     }
   }
 
-  // GET /projects/:id - Récupérer un projet avec ses tâches et commentaires
   static async getProjectById(req: AuthenticatedRequest, res: Response) {
     try {
       const { id } = req.params;
       
-      // Validation de l'ID UUID
       if (!id || typeof id !== 'string') {
         return res.status(400).json({
           error: 'Invalid project ID'
         });
       }
 
-      // Récupérer le projet
       const project = await ProjectService.getProjectById(id);
 
       if (!project) {

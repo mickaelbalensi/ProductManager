@@ -2,7 +2,6 @@ import { PrismaClient, Comment } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// Types pour les données d'entrée
 export interface CreateCommentData {
   content: string;
   taskId: string;
@@ -10,9 +9,7 @@ export interface CreateCommentData {
 }
 
 export class CommentService {
-  // Créer un commentaire
   static async createComment(data: CreateCommentData): Promise<Comment> {
-    // Vérifier que la tâche existe
     const task = await prisma.task.findUnique({
       where: { id: data.taskId },
     });
@@ -21,7 +18,6 @@ export class CommentService {
       throw new Error('TASK_NOT_FOUND');
     }
 
-    // Vérifier que l'auteur existe
     const author = await prisma.user.findUnique({
       where: { id: data.authorId },
     });
@@ -55,7 +51,6 @@ export class CommentService {
     });
   }
 
-  // Récupérer tous les commentaires d'une tâche
   static async getCommentsByTaskId(taskId: string): Promise<Comment[]> {
     return await prisma.comment.findMany({
       where: { taskId },
@@ -70,7 +65,7 @@ export class CommentService {
         }
       },
       orderBy: {
-        id: 'asc' // Ordre chronologique (pas de createdAt disponible)
+        id: 'asc' 
       }
     });
   }

@@ -37,27 +37,21 @@ const options = {
           type: 'object',
           required: ['firstName', 'familyName', 'email'],
           properties: {
-            id: {
-              type: 'string',
-              format: 'uuid',
-              description: 'ID unique de l\'utilisateur',
-              example: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
-            },
             firstName: {
               type: 'string',
               description: 'Prénom de l\'utilisateur',
-              example: 'John'
+              example: 'Yaacov'
             },
             familyName: {
               type: 'string',
               description: 'Nom de famille de l\'utilisateur',
-              example: 'Doe'
+              example: 'Elbaz'
             },
             email: {
               type: 'string',
               format: 'email',
               description: 'Email de l\'utilisateur',
-              example: 'john.doe@example.com'
+              example: 'Yaacov.elbaz@vo2test.com'
             },
             password: {
               type: 'string',
@@ -160,7 +154,7 @@ const options = {
       }
     }
   },
-  apis: ['./src/routes/*.ts'], // Chemin vers les fichiers contenant les annotations
+  apis: ['./src/routes/*.ts'], 
 };
 
 const specs = swaggerJsdoc(options);

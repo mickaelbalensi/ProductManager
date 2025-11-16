@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
     timestamp: new Date().toISOString(),
     status: 'running',
     endpoints: {
-      auth: '/auth (register, login, me)',
+      auth: '/auth (register, login)',
       users: '/users',
       projects: '/projects (protected)',
       tasks: '/tasks (protected)',
@@ -52,12 +52,10 @@ app.get('/', (req, res) => {
   });
 });
 
-// Route de santé
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', database: 'connected' });
 });
 
-// Démarrer le serveur
 app.listen(PORT, () => {
   console.log(`🚀 Le server runne au Port ${PORT}`);
   console.log(`📱 Health check: http://localhost:${PORT}/health`);

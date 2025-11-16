@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { AuthController } from '../controllers/authController';
-import { authMiddleware } from '../middleware/authMiddleware';
 
 const router = Router();
 
@@ -87,7 +86,5 @@ router.post('/register', AuthController.register);
  *               $ref: '#/components/schemas/Error'
  */
 router.post('/login', AuthController.login);
-
-// router.get('/me', authMiddleware, AuthController.getMe);
 
 export default router;

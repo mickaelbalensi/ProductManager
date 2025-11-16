@@ -5,9 +5,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 
-// Charger les variables d'environnement de test
-// - En local : utilise env.test (localhost:5433)
-// - En Docker : si DATABASE_URL est déjà fourni par le conteneur, on ne surcharge pas
 if (!process.env.DATABASE_URL) {
   dotenv.config({ path: './env.test' });
 }
@@ -18,7 +15,6 @@ import taskRoutes from '../../../src/routes/taskRoutes';
 
 export const testPrisma = new PrismaClient();
 
-// Application Express pour les tests
 export const createTestApp = () => {
   const app = express();
   
@@ -35,16 +31,13 @@ export const createTestApp = () => {
   return app;
 };
 
-// Helper pour nettoyer la base de données
 export const cleanDatabase = async () => {
-  // Supprimer dans l'ordre inverse des dépendances
   await testPrisma.comment.deleteMany();
   await testPrisma.task.deleteMany();
   await testPrisma.project.deleteMany();
   await testPrisma.user.deleteMany();
 };
 
-// Helper pour créer un utilisateur de test
 export const createTestUser = async (userData?: Partial<any>) => {
   const timestamp = Date.now();
   const random = Math.floor(Math.random() * 1000);
@@ -63,7 +56,6 @@ export const createTestUser = async (userData?: Partial<any>) => {
   return response.body;
 };
 
-// Helper pour se connecter et récupérer un token
 export const loginTestUser = async (email: string, password: string) => {
   const app = createTestApp();
   const response = await request(app)
@@ -73,7 +65,6 @@ export const loginTestUser = async (email: string, password: string) => {
   return response.body;
 };
 
-// Helper pour créer un projet de test
 export const createTestProject = async (token: string, projectData?: Partial<any>) => {
   const defaultProject = {
     name: `Test Project ${Date.now()}`,
@@ -89,7 +80,6 @@ export const createTestProject = async (token: string, projectData?: Partial<any
   return response.body;
 };
 
-// Helper pour créer une tâche de test
 export const createTestTask = async (token: string, projectId: string, taskData?: Partial<any>) => {
   const defaultTask = {
     title: `Test Task ${Date.now()}`,
@@ -105,7 +95,6 @@ export const createTestTask = async (token: string, projectId: string, taskData?
   return response.body;
 };
 
-// Helper pour créer un commentaire de test
 export const createTestComment = async (token: string, taskId: string, commentData?: Partial<any>) => {
   const defaultComment = {
     content: `Test comment ${Date.now()}`

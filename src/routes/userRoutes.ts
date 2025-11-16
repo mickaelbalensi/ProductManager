@@ -24,14 +24,14 @@ const userRouter = Router();
  *             properties:
  *               firstName:
  *                 type: string
- *                 example: "John"
+ *                 example: "Yehiel"
  *               familyName:
  *                 type: string
- *                 example: "Doe"
+ *                 example: "Zafrany"
  *               email:
  *                 type: string
  *                 format: email
- *                 example: "john.doe@example.com"
+ *                 example: "yehiel.zafrany@vo2test.com"
  *               password:
  *                 type: string
  *                 example: "password"
@@ -39,16 +39,16 @@ const userRouter = Router();
  *             with_password:
  *               summary: "Nouvel utilisateur avec mot de passe"
  *               value:
- *                 firstName: "John"
- *                 familyName: "Doe"
- *                 email: "john.doe@example.com"
+ *                 firstName: "Yehiel"
+ *                 familyName: "Zafrany"
+ *                 email: "yehiel.zafrany@vo2test.com"
  *                 password: "password"
  *             without_password:
  *               summary: "Utilisateur existant sans mot de passe"
  *               value:
- *                 firstName: "John"
- *                 familyName: "Doe"
- *                 email: "john.doe@example.com"
+ *                 firstName: "Yehiel"
+ *                 familyName: "Zafrany"
+ *                 email: "yehiel.zafrany@vo2test.com"
  *     responses:
  *       201:
  *         description: Utilisateur créé avec succès

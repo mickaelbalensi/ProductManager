@@ -81,7 +81,6 @@ export class AuthController {
     } catch (error: any) {
       console.error('Error logging in user:', error);
       
-      // Gestion des erreurs spécifiques
       if (error.message === 'INVALID_CREDENTIALS') {
         return res.status(401).json({
           error: 'Invalid email or password'

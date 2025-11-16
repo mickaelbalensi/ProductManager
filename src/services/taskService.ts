@@ -2,7 +2,6 @@ import { PrismaClient, Task, TaskStatus } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// Types pour les données d'entrée
 export interface CreateTaskData {
   title: string;
   description: string;

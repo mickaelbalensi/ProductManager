@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { TaskService, CreateTaskData } from '../services/taskService';
 
-// Controller pour gérer les endpoints User
 export class TaskController {
   
   static async createTask(req: Request, res: Response) {

@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
-// Types pour les données d'entrée
 export interface RegisterData {
   firstName: string;
   familyName: string;
@@ -28,7 +27,6 @@ export interface AuthResponse {
 export class AuthService {
   private static readonly SALT_ROUNDS = 12;
 
-  // Getters dynamiques pour les variables d'environnement
   private static get JWT_SECRET(): string {
     return process.env.JWT_SECRET || 'your-secret-key';
   }
@@ -37,7 +35,6 @@ export class AuthService {
     return process.env.JWT_EXPIRES_IN || '24h';
   }
 
-  // Générer un token JWT
   private static generateToken(userId: string): string {
     return jwt.sign(
       { userId },
@@ -46,7 +43,6 @@ export class AuthService {
     );
   }
 
-  // Vérifier un token JWT
   static verifyToken(token: string): { userId: string } {
     try {
       const decoded = jwt.verify(token, this.JWT_SECRET) as { userId: string };
@@ -56,16 +52,7 @@ export class AuthService {
     }
   }
 
-  // Inscription d'un utilisateur
   static async register(data: RegisterData): Promise<AuthResponse> {
-    // // Vérifier si l'email existe déjà
-    // const existingUser = await prisma.user.findUnique({
-    //   where: { email: data.email }
-    // });
-
-    // if (existingUser) {
-    //   throw new Error('EMAIL_ALREADY_EXISTS');
-    // }
 
     const hashedPassword = await bcrypt.hash(data.password, this.SALT_ROUNDS);
 
@@ -82,7 +69,6 @@ export class AuthService {
       }
     });
 
-    // Générer le token
     const token = this.generateToken(user.id);
 
     return {
@@ -100,14 +86,12 @@ export class AuthService {
       throw new Error('INVALID_CREDENTIALS');
     }
 
-    // Vérifier le mot de passe
     const isPasswordValid = await bcrypt.compare(data.password, user.password);
 
     if (!isPasswordValid) {
       throw new Error('INVALID_CREDENTIALS');
     }
 
-    // Générer le token
     const token = this.generateToken(user.id);
 
     return {
@@ -119,7 +103,6 @@ export class AuthService {
     };
   }
 
-  // Récupérer un utilisateur par ID (pour le middleware)
   static async getUserById(id: string): Promise<Omit<User, 'password'> | null> {
     return await prisma.user.findUnique({
       where: { id },

@@ -24,7 +24,7 @@ router.use(authMiddleware);
  *           type: string
  *           format: uuid
  *         description: ID de la tâche
- *         example: "5b8b8df2-35bf-4190-85d6-6f3a7760aa0c"
+ *         example: "605de932-3fd0-447a-a3a8-c5a3bea2ae67"
  *       - in: header
  *         name: Authorization
  *         required: true
@@ -51,7 +51,7 @@ router.use(authMiddleware);
  *               status:
  *                 type: string
  *                 enum: [todo, in_progress, done]
- *                 example: "todo"
+ *                 example: "done"
  *           examples:
  *             update_to_todo:
  *               summary: "Mettre le statut à 'todo'"
@@ -110,7 +110,7 @@ router.patch('/:id/status', TaskController.updateTaskStatus);
  *           type: string
  *           format: uuid
  *         description: ID de la tâche
- *         example: "5b8b8df2-35bf-4190-85d6-6f3a7760aa0c"
+ *         example: "605de932-3fd0-447a-a3a8-c5a3bea2ae67"
  *       - in: header
  *         name: Authorization
  *         required: true
@@ -137,17 +137,17 @@ router.patch('/:id/status', TaskController.updateTaskStatus);
  *             properties:
  *               content:
  *                 type: string
- *                 example: "precision, add type safety"
+ *                 example: "very nice task"
  *               authorId:
  *                 type: string
  *                 format: uuid
- *                 example: "902ad53e-b0df-4ee3-9e4c-ef2121830bdd"
+ *                 example: "8fe12b3b-486c-4583-a648-e13f41286740"
  *           examples:
  *             add_comment:
  *               summary: "Ajouter un commentaire de précision"
  *               value:
  *                 content: "precision, add type saety"
- *                 authorId: "902ad53e-b0df-4ee3-9e4c-ef2121830bdd"
+ *                 authorId: "8fe12b3b-486c-4583-a648-e13f41286740"
  *     responses:
  *       201:
  *         description: Commentaire créé avec succès
@@ -175,6 +175,5 @@ router.patch('/:id/status', TaskController.updateTaskStatus);
  *               $ref: '#/components/schemas/Error'
  */
 router.post('/:id/comments', CommentController.createComment);
-// router.get('/:id/comments', CommentController.getCommentsByTask);
 
 export default router;
