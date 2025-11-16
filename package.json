@@ -14,7 +14,7 @@
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "studio:dev": "npx prisma studio",
-    "studio:prod": "dotenv -e .env.prod -- npx prisma studio"
+    "studio:prod": "dotenv -e .env.product-manager-vo2.xyz -- npx prisma studio"
   },
   "keywords": [],
   "author": "",
